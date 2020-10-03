@@ -16,6 +16,8 @@ class Dashboard extends React.Component {
       },
       activeCodices: [],
     };
+    this.getUserInfo = this.getUserInfo.bind(this);
+    this.toggleActiveCodex = this.toggleActiveCodex.bind(this);
   }
 
   componentDidMount() {
@@ -39,16 +41,37 @@ class Dashboard extends React.Component {
     });
   }
 
+  toggleActiveCodex(codex) {
+    this.setState((prevState) => {
+      const currentActive = prevState.activeCodices;
+      if (currentActive.includes(codex)) {
+        currentActive.splice(currentActive.indexOf(codex), 1);
+        return { activeCodices: currentActive };
+      }
+      currentActive.push(codex);
+      return { activeCodices: currentActive };
+    });
+  }
+
   render() {
     if (!this.props.userId) {
       return <Redirect to="/login" />;
     }
+
+    const { name, codices } = this.state.userInfo;
+    const { activeCodices } = this.state;
+
     return (
       <div className={styles.dashboard}>
-        <Header name={this.state.userInfo.name} />
+        <Header name={name} />
+
         <div className={styles.sidebarContentContainer}>
-          <Sidebar codices={this.state.userInfo.codices} />
-          <Content activeCodices={this.state.activeCodices} />
+          <Sidebar
+            activeCodices={activeCodices}
+            codices={codices}
+            toggleActiveCodex={this.toggleActiveCodex}
+          />
+          <Content activeCodices={activeCodices} />
         </div>
       </div>
     );

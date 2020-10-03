@@ -1,0 +1,23 @@
+.sidebarToggleOff {
+  width: 100%;
+  background-color: lightgray;
+  padding: 5px;
+  margin: 0px 0px 10px 0px;
+  cursor: default;
+  transition: background-color 0.2s;
+}
+.sidebarToggleOff:hover {
+  background-color: darkgray;
+}
+
+.sidebarToggleOn {
+  width: 100%;
+  background-color: darkgray;
+  padding: 5px;
+  margin: 0px 0px 10px 0px;
+  cursor: default;
+  transition: background-color 0.2s;
+}
+.sidebarToggleOn:hover {
+  background-color: lightgray;
+}

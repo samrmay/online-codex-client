@@ -7,7 +7,11 @@ class Content extends React.Component {
   }
 
   render() {
-    return <div className={styles.content}>Content</div>;
+    const activeArr = this.props.activeCodices.map((codex, index) => {
+      return <div key={index}>{codex.name}</div>;
+    });
+
+    return <div className={styles.content}>{activeArr}</div>;
   }
 }
 
