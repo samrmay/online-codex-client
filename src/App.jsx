@@ -22,11 +22,14 @@ class App extends React.Component {
     fetch(process.env.SERVER_URL + "sessions", {
       method: "GET",
       headers: {
-        credentials: "include",
+        "content-type": "application/json",
       },
+      credentials: "include",
     }).then((response) => {
       if (response.status == 200) {
-        response.json().then((response) => console.log(response));
+        response
+          .json()
+          .then((data) => this.setState({ loggedUserId: data.id }));
       } else {
         this.setState({ loggedUserId: null });
       }
@@ -37,14 +40,15 @@ class App extends React.Component {
     fetch(process.env.SERVER_URL + "sessions", {
       method: "POST",
       headers: {
-        credentials: "include",
-        "Content-Type": "application/json",
+        "content-type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({ email, password }),
     }).then((response) => {
-      if (response.status === 200) {
-        response.json().then((response) => {
-          this.setState({ loggedUserId: response.id });
+      if (response.status === 201) {
+        console.log(response.headers);
+        response.json().then((data) => {
+          this.setState({ loggedUserId: data.id });
         });
       }
     });
@@ -53,8 +57,6 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        Header
-        <br />
         <Switch>
           <Route path="/login">
             <Login
@@ -71,8 +73,6 @@ class App extends React.Component {
             <Home />
           </Route>
         </Switch>
-        <br />
-        Footer
       </div>
     );
   }
