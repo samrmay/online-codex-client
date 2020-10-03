@@ -1,0 +1,9 @@
+.entry {
+  background-color: lightgray;
+  border: 2px black solid;
+  padding: 5px;
+  transition: 0.2s;
+}
+.entry:hover {
+  background-color: darkgray;
+}
