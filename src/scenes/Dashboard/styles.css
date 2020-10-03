@@ -1,0 +1,9 @@
+.dashboard {
+  display: grid;
+  grid-template-rows: 1fr 8fr;
+  height: 100%;
+}
+.sidebarContentContainer {
+  display: grid;
+  grid-template-columns: 1fr 8fr;
+}

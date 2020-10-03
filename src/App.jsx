@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import Dashboard from "./scenes/Dashboard";
 import Home from "./scenes/Home";
 import Login from "./scenes/Login";
+import styles from "./styles.css";
 
 class App extends React.Component {
   constructor() {
@@ -56,7 +57,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.rootContainer}>
         <Switch>
           <Route path="/login">
             <Login

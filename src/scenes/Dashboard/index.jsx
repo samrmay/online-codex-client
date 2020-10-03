@@ -1,5 +1,9 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
+import Content from "./components/Content";
+import styles from "./styles.css";
 
 class Dashboard extends React.Component {
   constructor() {
@@ -10,6 +14,7 @@ class Dashboard extends React.Component {
         name: "",
         codices: [],
       },
+      activeCodices: [],
     };
   }
 
@@ -38,7 +43,15 @@ class Dashboard extends React.Component {
     if (!this.props.userId) {
       return <Redirect to="/login" />;
     }
-    return <div>Dashboard</div>;
+    return (
+      <div className={styles.dashboard}>
+        <Header name={this.state.userInfo.name} />
+        <div className={styles.sidebarContentContainer}>
+          <Sidebar codices={this.state.userInfo.codices} />
+          <Content activeCodices={this.state.activeCodices} />
+        </div>
+      </div>
+    );
   }
 }
 
