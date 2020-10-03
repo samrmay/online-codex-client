@@ -1,26 +1,26 @@
 import React from "react";
 import styles from "./styles.css";
 
-class SidebarToggle extends React.Component {
+class Tab extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
-    this.props.handleClick(this.props.codex._id);
+    const { handleClick, codex, isActive } = this.props;
+    handleClick(isActive ? null : codex);
   }
 
   render() {
-    const { handleClick, codex, active } = this.props;
-    const style = active ? styles.sidebarToggleOn : styles.sidebarToggleOff;
-
+    const { name, isActive } = this.props;
+    const style = isActive ? styles.tabActive : styles.tab;
     return (
       <div className={style} onClick={this.handleClick}>
-        {codex.name}
+        {name}
       </div>
     );
   }
 }
 
-export default SidebarToggle;
+export default Tab;

@@ -1,0 +1,19 @@
+.tab {
+  cursor: default;
+  background-color: lightblue;
+  padding: 5px;
+  transition: background-color 0.2s;
+}
+.tab:hover {
+  background-color: red;
+}
+
+.tabActive {
+  cursor: default;
+  background-color: red;
+  padding: 5px;
+  transition: background-color 0.2s;
+}
+.tabActive:hover {
+  background-color: lightgray;
+}

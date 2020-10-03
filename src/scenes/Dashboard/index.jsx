@@ -41,16 +41,37 @@ class Dashboard extends React.Component {
     });
   }
 
-  toggleActiveCodex(codex) {
-    this.setState((prevState) => {
-      const currentActive = prevState.activeCodices;
-      if (currentActive.includes(codex)) {
-        currentActive.splice(currentActive.indexOf(codex), 1);
-        return { activeCodices: currentActive };
+  toggleActiveCodex(codexId) {
+    const currentActive = this.state.activeCodices;
+    let includesCodex = false;
+    let codexIndex = -1;
+    for (let i = 0; i < currentActive.length; i++) {
+      if (currentActive[i]._id === codexId) {
+        includesCodex = true;
+        codexIndex = i;
+        break;
       }
-      currentActive.push(codex);
-      return { activeCodices: currentActive };
-    });
+    }
+
+    if (!includesCodex) {
+      fetch(process.env.SERVER_URL + `codices/${codexId}`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
+      }).then((response) => {
+        if (response.status === 200) {
+          response.json().then((data) => {
+            currentActive.push(data);
+            this.setState({ activeCodices: currentActive });
+          });
+        }
+      });
+    } else {
+      currentActive.splice(codexIndex, 1);
+      this.setState({ activeCodices: currentActive });
+    }
   }
 
   render() {
