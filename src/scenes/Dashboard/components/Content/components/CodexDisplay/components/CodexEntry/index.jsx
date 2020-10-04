@@ -32,6 +32,17 @@ class CodexEntry extends React.Component {
         if (item.dataType === "Image") {
           console.error("Cannot deal with images yet");
         }
+
+        if (item.dataType === "ImageUrl") {
+          return (
+            <img
+              key={index}
+              src={item.data}
+              alt={item.data}
+              style={{ width: "200px" }}
+            />
+          );
+        }
       });
     }
 

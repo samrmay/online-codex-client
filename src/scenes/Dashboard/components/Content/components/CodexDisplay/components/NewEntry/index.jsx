@@ -21,6 +21,19 @@ class NewEntry extends React.Component {
       if (item.dataType === "Image") {
         console.error("Cannot deal with images yet");
       }
+
+      if (item.dataType === "ImageUrl") {
+        return (
+          <div key={index}>
+            <InteractableText defaultText="https://upload.wikimedia.org/wikipedia/commons/f/fb/Hotdog_-_Evan_Swigart.jpg" />
+            <img
+              style={{ width: "200px" }}
+              src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Hotdog_-_Evan_Swigart.jpg"
+              alt="hotdog"
+            />
+          </div>
+        );
+      }
     });
 
     return (
