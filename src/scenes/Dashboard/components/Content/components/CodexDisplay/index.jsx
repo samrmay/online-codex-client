@@ -1,6 +1,7 @@
 import React from "react";
 import CodexHeader from "./components/CodexHeader";
 import CodexEntry from "./components/CodexEntry";
+import NewEntry from "./components/NewEntry";
 
 class CodexDisplay extends React.Component {
   constructor(props) {
@@ -8,7 +9,7 @@ class CodexDisplay extends React.Component {
   }
 
   render() {
-    const { activeCodex } = this.props;
+    const { activeCodex, newEntry } = this.props;
     if (!activeCodex) {
       return <div>Select a codex</div>;
     }
@@ -20,9 +21,21 @@ class CodexDisplay extends React.Component {
       });
     }
 
+    if (newEntry && Array.isArray(content)) {
+      content.unshift(
+        <NewEntry
+          defaultStructure={activeCodex.defaultEntryStructure}
+          key={-1}
+        />
+      );
+    }
+
     return (
       <div>
-        <CodexHeader name={activeCodex.name} />
+        <CodexHeader
+          name={activeCodex.name}
+          handleChange={this.props.handleChange}
+        />
         <div>{content}</div>
       </div>
     );

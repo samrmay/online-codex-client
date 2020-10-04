@@ -8,23 +8,35 @@ class Content extends React.Component {
     super(props);
     this.state = {
       activeCodex: null,
+      newEntry: false,
     };
     this.handleActiveCodexChange = this.handleActiveCodexChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleActiveCodexChange(codex) {
     this.setState({ activeCodex: codex });
   }
 
+  handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  }
+
   render() {
+    const { activeCodex, newEntry } = this.state;
     return (
       <div className={styles.content}>
         <TabMenu
           activeCodices={this.props.activeCodices}
           handleActiveCodexChange={this.handleActiveCodexChange}
-          activeCodex={this.state.activeCodex}
+          activeCodex={activeCodex}
         />
-        <CodexDisplay activeCodex={this.state.activeCodex} />
+        <CodexDisplay
+          activeCodex={activeCodex}
+          handleChange={this.handleChange}
+          newEntry={newEntry}
+        />
       </div>
     );
   }
