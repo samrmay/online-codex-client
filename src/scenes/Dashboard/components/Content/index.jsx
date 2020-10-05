@@ -12,6 +12,25 @@ class Content extends React.Component {
     };
     this.handleActiveCodexChange = this.handleActiveCodexChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.addEntry = this.addEntry.bind(this);
+  }
+
+  addEntry(entry) {
+    const { activeCodex } = this.state;
+    fetch(process.env.SERVER_URL + `codices/addEntries/${activeCodex._id}`, {
+      method: "PUT",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ entryArr: [entry] }),
+    }).then((response) => {
+      if (response.status === 200) {
+        response.json().then((data) => {
+          this.setState({ activeCodex: data, newEntry: false });
+        });
+      }
+    });
   }
 
   handleActiveCodexChange(codex) {
@@ -36,6 +55,7 @@ class Content extends React.Component {
           activeCodex={activeCodex}
           handleChange={this.handleChange}
           newEntry={newEntry}
+          addEntry={this.addEntry}
         />
       </div>
     );

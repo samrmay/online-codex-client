@@ -6,17 +6,11 @@ class InteractableText extends React.Component {
     super(props);
     this.state = {
       isFocused: false,
-      textValue: "",
     };
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
-  }
-
-  componentDidMount() {
-    const { defaultText } = this.props;
-    this.setState({ textValue: defaultText });
   }
 
   handleFocus() {
@@ -28,8 +22,11 @@ class InteractableText extends React.Component {
   }
 
   handleChange(event) {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
+    if (Number.isInteger(this.props.index)) {
+      this.props.handleChange(this.props.index, event.target.value);
+    } else {
+      this.props.handleChange(event.target.value);
+    }
   }
 
   handleKeyPress(event) {
@@ -39,8 +36,8 @@ class InteractableText extends React.Component {
   }
 
   render() {
-    const { Tag, onChange, fontSize, fontWeight, fontFamily } = this.props;
-    const { isFocused, textValue } = this.state;
+    const { Tag, fontSize, fontWeight, fontFamily, value } = this.props;
+    const { isFocused } = this.state;
     const style = { fontSize, fontWeight, fontFamily };
 
     return (
@@ -54,7 +51,7 @@ class InteractableText extends React.Component {
             className={styles.textInput}
             style={style}
             name="textValue"
-            value={textValue}
+            value={value}
             tabIndex={-1}
             autoFocus
             onBlur={this.handleBlur}
@@ -62,7 +59,7 @@ class InteractableText extends React.Component {
             onKeyPress={this.handleKeyPress}
           />
         ) : (
-          <Tag style={style}>{textValue}</Tag>
+          <Tag style={style}>{value}</Tag>
         )}
       </div>
     );
@@ -70,10 +67,9 @@ class InteractableText extends React.Component {
 }
 
 InteractableText.defaultProps = {
-  defaultText: "Interactable Header",
-  onChange: (text) => {
-    console.log(text);
-  },
+  handleChange: () => {},
+  value: "Interactable Header",
+  index: null,
   Tag: "span",
   fontSize: "16px",
   fontWeight: "500",

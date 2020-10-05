@@ -9,7 +9,7 @@ class CodexDisplay extends React.Component {
   }
 
   render() {
-    const { activeCodex, newEntry } = this.props;
+    const { activeCodex, newEntry, addEntry } = this.props;
     if (!activeCodex) {
       return <div>Select a codex</div>;
     }
@@ -25,6 +25,15 @@ class CodexDisplay extends React.Component {
       content.unshift(
         <NewEntry
           defaultStructure={activeCodex.defaultEntryStructure}
+          addEntry={addEntry}
+          key={-1}
+        />
+      );
+    } else if (newEntry) {
+      content = (
+        <NewEntry
+          defaultStructure={activeCodex.defaultEntryStructure}
+          addEntry={addEntry}
           key={-1}
         />
       );

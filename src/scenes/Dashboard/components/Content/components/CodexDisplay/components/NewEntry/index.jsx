@@ -5,15 +5,57 @@ import styles from "./styles.css";
 class NewEntry extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      entryName: "Name",
+      dataArr: this.props.defaultStructure,
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleEntryNameChange = this.handleEntryNameChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    let dataArr = this.props.defaultStructure;
+    if (dataArr) {
+      for (let i = 0; i < dataArr.length; i++) {
+        dataArr[i].data = dataArr[i].name;
+      }
+    }
+    this.setState({ dataArr });
+  }
+
+  handleChange(index, value) {
+    this.setState((prevState) => {
+      prevState.dataArr[index].data = value;
+      return prevState;
+    });
+  }
+
+  handleEntryNameChange(value) {
+    this.setState({ entryName: value });
+  }
+
+  handleSubmit() {
+    const { dataArr } = this.state;
+    const name = this.state.entryName;
+
+    const newEntry = { name, dataArr };
+    console.log(newEntry);
+    this.props.addEntry(newEntry);
   }
 
   render() {
     let content = "No default structure :(";
+    const { dataArr } = this.state;
     content = this.props.defaultStructure.map((item, index) => {
       if (item.dataType === "String") {
         return (
           <div key={index}>
-            <InteractableText defaultText={`${item.name}`} />
+            <InteractableText
+              value={dataArr[index].data}
+              index={index}
+              handleChange={this.handleChange}
+            />
           </div>
         );
       }
@@ -25,12 +67,12 @@ class NewEntry extends React.Component {
       if (item.dataType === "ImageUrl") {
         return (
           <div key={index}>
-            <InteractableText defaultText="https://upload.wikimedia.org/wikipedia/commons/f/fb/Hotdog_-_Evan_Swigart.jpg" />
-            <img
-              style={{ width: "200px" }}
-              src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Hotdog_-_Evan_Swigart.jpg"
-              alt="hotdog"
+            <InteractableText
+              value={dataArr[index].data}
+              index={index}
+              handleChange={this.handleChange}
             />
+            <img style={{ width: "200px" }} src={dataArr[index].data} />
           </div>
         );
       }
@@ -39,12 +81,14 @@ class NewEntry extends React.Component {
     return (
       <div className={styles.newEntry}>
         <InteractableText
-          defaultText="Entry name"
+          value={this.state.entryName}
+          handleChange={this.handleEntryNameChange}
           fontSize="24px"
           fontWeight={500}
           fontFamily="Sans-Serif"
         />
         {content}
+        <button onClick={this.handleSubmit}>Submit</button>
       </div>
     );
   }
