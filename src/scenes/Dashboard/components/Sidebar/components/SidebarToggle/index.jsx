@@ -12,7 +12,7 @@ class SidebarToggle extends React.Component {
   }
 
   render() {
-    const { handleClick, codex, active } = this.props;
+    const { codex, active } = this.props;
     const style = active ? styles.sidebarToggleOn : styles.sidebarToggleOff;
 
     return (

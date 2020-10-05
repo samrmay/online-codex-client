@@ -8,7 +8,12 @@ class TabMenu extends React.Component {
   }
 
   render() {
-    const { activeCodices, handleActiveCodexChange, activeCodex } = this.props;
+    const {
+      activeCodices,
+      handleActiveCodexChange,
+      activeCodex,
+      newCodex,
+    } = this.props;
 
     let tabArr = [];
     if (activeCodices.length > 0) {
@@ -24,6 +29,7 @@ class TabMenu extends React.Component {
         );
       });
     }
+
     return <div className={styles.tabMenu}>{tabArr}</div>;
   }
 }

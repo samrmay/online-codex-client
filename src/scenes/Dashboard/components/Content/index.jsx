@@ -15,6 +15,14 @@ class Content extends React.Component {
     this.addEntry = this.addEntry.bind(this);
   }
 
+  componentDidUpdate() {
+    const { activeCodex } = this.state;
+    const { activeCodices } = this.props;
+    if (activeCodex !== null && !activeCodices.includes(activeCodex)) {
+      this.setState({ activeCodex: null });
+    }
+  }
+
   addEntry(entry) {
     const { activeCodex } = this.state;
     fetch(process.env.SERVER_URL + `codices/addEntries/${activeCodex._id}`, {
@@ -34,6 +42,7 @@ class Content extends React.Component {
   }
 
   handleActiveCodexChange(codex) {
+    console.log(codex);
     this.setState({ activeCodex: codex });
   }
 

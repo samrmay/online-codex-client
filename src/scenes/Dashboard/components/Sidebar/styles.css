@@ -2,3 +2,15 @@
   background-color: slategray;
   height: 100%;
 }
+.newCodexButton {
+  width: 100%;
+  background-color: lightgray;
+  padding: 5px;
+  cursor: default;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  transition: background-color 0.2s;
+}
+.newCodexButton:hover {
+  background-color: darkgray;
+}

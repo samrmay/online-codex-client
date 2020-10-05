@@ -18,6 +18,7 @@ class Dashboard extends React.Component {
     };
     this.getUserInfo = this.getUserInfo.bind(this);
     this.toggleActiveCodex = this.toggleActiveCodex.bind(this);
+    this.initNewCodex = this.initNewCodex.bind(this);
   }
 
   componentDidMount() {
@@ -40,6 +41,25 @@ class Dashboard extends React.Component {
           this.setState({ userInfo: { name, email, codices } });
         });
       }
+    });
+  }
+
+  postNewCodex() {}
+
+  initNewCodex() {
+    const { userId } = this.props;
+    const currentActive = this.state.activeCodices;
+    currentActive.unshift({
+      newCodex: true,
+      name: "New Codex",
+      owner: userId,
+      isPrivate: true,
+      defaultEntryStructure: [],
+      entries: [],
+    });
+
+    this.setState({
+      activeCodices: currentActive,
     });
   }
 
@@ -93,6 +113,7 @@ class Dashboard extends React.Component {
             activeCodices={activeCodices}
             codices={codices}
             toggleActiveCodex={this.toggleActiveCodex}
+            initNewCodex={this.initNewCodex}
           />
           <Content activeCodices={activeCodices} />
         </div>

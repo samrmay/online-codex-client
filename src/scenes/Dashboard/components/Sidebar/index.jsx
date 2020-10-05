@@ -8,6 +8,8 @@ class Sidebar extends React.Component {
   }
 
   render() {
+    const { initNewCodex } = this.props;
+
     const sidebarTabs = this.props.codices.map((codex, index) => {
       return (
         <SidebarToggle
@@ -21,6 +23,9 @@ class Sidebar extends React.Component {
 
     return (
       <div className={styles.sidebar}>
+        <div className={styles.newCodexButton} onClick={initNewCodex}>
+          New codex
+        </div>
         <div>{sidebarTabs}</div>
       </div>
     );
