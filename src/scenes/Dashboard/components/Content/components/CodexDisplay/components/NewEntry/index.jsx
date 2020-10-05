@@ -45,16 +45,19 @@ class NewEntry extends React.Component {
   }
 
   render() {
-    let content = "No default structure :(";
     const { dataArr } = this.state;
-    content = this.props.defaultStructure.map((item, index) => {
+    const { defaultStructure } = this.props;
+
+    const content = defaultStructure.map((item, index) => {
       if (item.dataType === "String") {
+        const fontSize = item.location === "Header" ? "24px" : "16px";
         return (
           <div key={index}>
             <InteractableText
               value={dataArr[index].data}
               index={index}
               handleChange={this.handleChange}
+              fontSize={fontSize}
             />
           </div>
         );
@@ -65,14 +68,16 @@ class NewEntry extends React.Component {
       }
 
       if (item.dataType === "ImageUrl") {
+        const imgSize = item.location === "Header" ? "100px" : "200px";
         return (
-          <div key={index}>
+          <div key={index} style={{ display: "flex", flexDirection: "column" }}>
             <InteractableText
               value={dataArr[index].data}
               index={index}
               handleChange={this.handleChange}
+              fontSize="12px"
             />
-            <img style={{ width: "200px" }} src={dataArr[index].data} />
+            <img style={{ width: imgSize }} src={dataArr[index].data} />
           </div>
         );
       }

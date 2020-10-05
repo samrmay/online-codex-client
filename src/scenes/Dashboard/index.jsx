@@ -21,7 +21,9 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    this.getUserInfo();
+    if (this.props.userId) {
+      this.getUserInfo();
+    }
   }
 
   getUserInfo() {

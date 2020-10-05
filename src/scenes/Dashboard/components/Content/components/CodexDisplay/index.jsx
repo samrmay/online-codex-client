@@ -2,6 +2,7 @@ import React from "react";
 import CodexHeader from "./components/CodexHeader";
 import CodexEntry from "./components/CodexEntry";
 import NewEntry from "./components/NewEntry";
+import styles from "./styles.css";
 
 class CodexDisplay extends React.Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class CodexDisplay extends React.Component {
     }
 
     return (
-      <div>
+      <div className={styles.codexDisplay}>
         <CodexHeader
           name={activeCodex.name}
           handleChange={this.props.handleChange}

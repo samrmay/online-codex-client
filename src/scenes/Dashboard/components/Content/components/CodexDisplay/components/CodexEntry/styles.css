@@ -7,3 +7,7 @@
 .entry:hover {
   background-color: darkgray;
 }
+
+.entryName {
+  display: inline;
+}
