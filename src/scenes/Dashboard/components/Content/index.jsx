@@ -42,7 +42,6 @@ class Content extends React.Component {
   }
 
   handleActiveCodexChange(codex) {
-    console.log(codex);
     this.setState({ activeCodex: codex });
   }
 
@@ -65,6 +64,7 @@ class Content extends React.Component {
           handleChange={this.handleChange}
           newEntry={newEntry}
           addEntry={this.addEntry}
+          handleCodexEdit={this.props.handleCodexEdit}
         />
       </div>
     );

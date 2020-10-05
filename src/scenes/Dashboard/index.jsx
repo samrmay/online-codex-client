@@ -19,6 +19,7 @@ class Dashboard extends React.Component {
     this.getUserInfo = this.getUserInfo.bind(this);
     this.toggleActiveCodex = this.toggleActiveCodex.bind(this);
     this.initNewCodex = this.initNewCodex.bind(this);
+    this.handleCodexEdit = this.handleCodexEdit.bind(this);
   }
 
   componentDidMount() {
@@ -44,23 +45,32 @@ class Dashboard extends React.Component {
     });
   }
 
-  postNewCodex() {}
-
   initNewCodex() {
     const { userId } = this.props;
     const currentActive = this.state.activeCodices;
-    currentActive.unshift({
-      newCodex: true,
-      name: "New Codex",
-      owner: userId,
-      isPrivate: true,
-      defaultEntryStructure: [],
-      entries: [],
-    });
+    if (!currentActive.length > 0 || !currentActive[0].newCodex) {
+      currentActive.unshift({
+        newCodex: true,
+        name: "New Codex",
+        owner: userId,
+        isPrivate: true,
+        defaultEntryStructure: [],
+        entries: [],
+      });
 
-    this.setState({
-      activeCodices: currentActive,
-    });
+      this.setState({
+        activeCodices: currentActive,
+      });
+    }
+  }
+
+  handleCodexEdit(codex) {
+    if (codex.newCodex) {
+      this.setState((prevState) => {
+        prevState.activeCodices[0] = codex;
+        return { activeCodices: prevState.activeCodices };
+      });
+    }
   }
 
   toggleActiveCodex(codexId) {
@@ -115,7 +125,10 @@ class Dashboard extends React.Component {
             toggleActiveCodex={this.toggleActiveCodex}
             initNewCodex={this.initNewCodex}
           />
-          <Content activeCodices={activeCodices} />
+          <Content
+            activeCodices={activeCodices}
+            handleCodexEdit={this.handleCodexEdit}
+          />
         </div>
       </div>
     );

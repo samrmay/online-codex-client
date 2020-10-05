@@ -2,6 +2,7 @@ import React from "react";
 import CodexHeader from "./components/CodexHeader";
 import CodexEntry from "./components/CodexEntry";
 import NewEntry from "./components/NewEntry";
+import NewCodex from "./components/NewCodex";
 import styles from "./styles.css";
 
 class CodexDisplay extends React.Component {
@@ -10,9 +11,13 @@ class CodexDisplay extends React.Component {
   }
 
   render() {
-    const { activeCodex, newEntry, addEntry } = this.props;
+    const { activeCodex, newEntry, addEntry, handleCodexEdit } = this.props;
     if (!activeCodex) {
       return <div>Select a codex</div>;
+    }
+
+    if (activeCodex.newCodex) {
+      return <NewCodex codex={activeCodex} handleCodexEdit={handleCodexEdit} />;
     }
 
     let content = "Add an entry to get started";
@@ -21,7 +26,6 @@ class CodexDisplay extends React.Component {
         return <CodexEntry entry={entry} key={index} />;
       });
     }
-
     if (newEntry && Array.isArray(content)) {
       content.unshift(
         <NewEntry

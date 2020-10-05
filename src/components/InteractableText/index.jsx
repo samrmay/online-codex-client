@@ -38,11 +38,16 @@ class InteractableText extends React.Component {
   render() {
     const { Tag, fontSize, fontWeight, fontFamily, value } = this.props;
     const { isFocused } = this.state;
-    const style = { fontSize, fontWeight, fontFamily };
+    const style = {
+      fontSize,
+      fontWeight,
+      fontFamily,
+      margin: "0px",
+    };
 
     return (
       <div
-        className={styles.headerContainer}
+        className={styles.container}
         tabIndex={-1}
         onFocus={this.handleFocus}
       >

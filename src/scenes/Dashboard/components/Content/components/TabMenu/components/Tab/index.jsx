@@ -13,10 +13,11 @@ class Tab extends React.Component {
   }
 
   render() {
-    const { name, isActive } = this.props;
+    const { name, isActive, codex } = this.props;
     const style = isActive ? styles.tabActive : styles.tab;
     return (
       <div className={style} onClick={this.handleClick}>
+        {codex.newCodex ? "New codex: " : null}
         {name}
       </div>
     );
