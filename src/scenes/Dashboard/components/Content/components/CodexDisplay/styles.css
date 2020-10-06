@@ -1,3 +1,6 @@
 .codexDisplay {
   overflow: auto;
 }
+.entries {
+  overflow: auto;
+}

@@ -1,4 +1,6 @@
 import React from "react";
+import EntryImageUrl from "../../../EntryImageUrl";
+import EntryText from "../../../EntryText";
 import styles from "./styles.css";
 
 class CodexEntry extends React.Component {
@@ -19,19 +21,20 @@ class CodexEntry extends React.Component {
   render() {
     const { entry } = this.props;
     const { isMinimized } = this.state;
-    const headerStyle = { display: isMinimized ? "inline" : "block" };
-    const bodyStyle = { display: isMinimized ? "none" : "block" };
     let content = null;
 
     if (entry.dataArr.length > 0) {
       content = entry.dataArr.map((item, index) => {
-        let style = item.location === "Header" ? headerStyle : bodyStyle;
+        let visible = item.displayType === "Header" ? true : !isMinimized;
 
         if (item.dataType === "String") {
           return (
-            <div key={index} style={style}>
-              {item.name}: {item.data}
-            </div>
+            <EntryText
+              key={index}
+              visible={visible}
+              value={item.data}
+              name={item.name}
+            />
           );
         }
 
@@ -40,9 +43,15 @@ class CodexEntry extends React.Component {
         }
 
         if (item.dataType === "ImageUrl") {
-          style.width = isMinimized ? "100px" : "200px";
+          let width = isMinimized ? "100px" : "200px";
           return (
-            <img key={index} src={item.data} alt={item.data} style={style} />
+            <EntryImageUrl
+              key={index}
+              visible={visible}
+              value={item.data}
+              width={width}
+              name={item.name}
+            />
           );
         }
       });

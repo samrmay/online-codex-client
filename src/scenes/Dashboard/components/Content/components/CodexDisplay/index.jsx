@@ -50,7 +50,7 @@ class CodexDisplay extends React.Component {
           name={activeCodex.name}
           handleChange={this.props.handleChange}
         />
-        <div>{content}</div>
+        <div className={styles.entries}>{content}</div>
       </div>
     );
   }

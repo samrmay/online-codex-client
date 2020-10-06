@@ -14,7 +14,9 @@ class InteractableText extends React.Component {
   }
 
   handleFocus() {
-    this.setState({ isFocused: true });
+    if (this.props.editable) {
+      this.setState({ isFocused: true });
+    }
   }
 
   handleBlur() {
@@ -79,6 +81,7 @@ InteractableText.defaultProps = {
   fontSize: "16px",
   fontWeight: "500",
   fontFamily: "Sans-Serif",
+  editable: true,
 };
 
 export default InteractableText;

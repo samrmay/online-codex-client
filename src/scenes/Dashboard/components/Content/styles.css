@@ -2,4 +2,5 @@
   background-color: slateblue;
   display: grid;
   grid-template-rows: 1fr 16fr;
+  height: 100%;
 }
