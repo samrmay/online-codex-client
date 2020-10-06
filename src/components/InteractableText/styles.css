@@ -1,6 +1,10 @@
 .container {
   display: inline;
   margin: 0px;
+  outline: none;
+}
+.container:hover {
+  outline: none;
 }
 
 .textInput {

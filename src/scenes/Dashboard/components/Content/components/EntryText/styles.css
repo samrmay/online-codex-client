@@ -1,3 +1,11 @@
+.textContainer {
+  display: flex;
+}
 .text {
   padding: 2px;
+}
+
+.editIcon {
+  width: 15px;
+  cursor: pointer;
 }

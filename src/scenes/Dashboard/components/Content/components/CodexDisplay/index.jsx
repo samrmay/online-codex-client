@@ -23,7 +23,14 @@ class CodexDisplay extends React.Component {
     let content = "Add an entry to get started";
     if (activeCodex.entries.length > 0) {
       content = activeCodex.entries.map((entry, index) => {
-        return <CodexEntry entry={entry} key={index} />;
+        return (
+          <CodexEntry
+            entry={entry}
+            key={index}
+            index={index}
+            handleEntryChange={this.props.handleEntryChange}
+          />
+        );
       });
     }
     if (newEntry && Array.isArray(content)) {

@@ -4,6 +4,9 @@ import styles from "./styles.css";
 class EntryImageUrl extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      beingEdited: false,
+    };
   }
 
   render() {

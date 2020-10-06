@@ -1,9 +1,24 @@
 import React from "react";
+import InteractableText from "../../../../../../components/InteractableText";
+import editIcon from "../../../../../../assets/edit.svg";
 import styles from "./styles.css";
 
 class EntryText extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      beingEdited: false,
+    };
+    this.handleEditClick = this.handleEditClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleEditClick() {
+    this.setState({ beingEdited: true });
+  }
+
+  handleChange(value) {
+    this.props.handleChange(this.props.index, value);
   }
 
   render() {
@@ -14,6 +29,7 @@ class EntryText extends React.Component {
       Tag,
       visible,
       value,
+      editable,
     } = this.props;
     let { display } = this.props;
     if (!visible) {
@@ -22,9 +38,24 @@ class EntryText extends React.Component {
     const style = { fontSize, fontFamily, fontWeight, display };
 
     return (
-      <Tag className={styles.text} style={style}>
-        {value}
-      </Tag>
+      <div style={style}>
+        <div className={styles.textContainer}>
+          {editable ? (
+            <img
+              src={editIcon}
+              className={styles.editIcon}
+              onClick={this.handleEditClick}
+            />
+          ) : null}
+
+          <InteractableText
+            Tag={Tag}
+            value={value}
+            editable={this.state.beingEdited}
+            handleChange={this.handleChange}
+          />
+        </div>
+      </div>
     );
   }
 }
@@ -39,4 +70,5 @@ EntryText.defaultProps = {
   value: "Entry text value",
   Tag: "div",
   display: "block",
+  index: -1,
 };

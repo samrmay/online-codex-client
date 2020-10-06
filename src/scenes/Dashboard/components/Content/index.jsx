@@ -12,6 +12,7 @@ class Content extends React.Component {
     };
     this.handleActiveCodexChange = this.handleActiveCodexChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleEntryChange = this.handleEntryChange.bind(this);
     this.addEntry = this.addEntry.bind(this);
   }
 
@@ -41,6 +42,14 @@ class Content extends React.Component {
     });
   }
 
+  handleEntryChange(index, entry) {
+    this.setState((prevState) => {
+      const { activeCodex } = prevState;
+      activeCodex.entries[index] = entry;
+      return { activeCodex };
+    });
+  }
+
   handleActiveCodexChange(codex) {
     this.setState({ activeCodex: codex });
   }
@@ -65,6 +74,7 @@ class Content extends React.Component {
           newEntry={newEntry}
           addEntry={this.addEntry}
           handleCodexEdit={this.props.handleCodexEdit}
+          handleEntryChange={this.handleEntryChange}
         />
       </div>
     );

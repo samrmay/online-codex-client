@@ -9,19 +9,35 @@ class CodexEntry extends React.Component {
     super(props);
     this.state = {
       isMinimized: true,
+      editable: false,
     };
     this.handleMinimizeToggle = this.handleMinimizeToggle.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleEntryElementEdit = this.handleEntryElementEdit.bind(this);
   }
 
   handleMinimizeToggle() {
     this.setState((prevState) => {
-      return { isMinimized: !prevState.isMinimized };
+      const wasMinimized = prevState.isMinimized;
+      if (!wasMinimized) {
+        return { isMinimized: !wasMinimized, editable: false };
+      }
+      return { isMinimized: !wasMinimized };
     });
+  }
+
+  handleChange(name, value) {
+    this.setState({ [name]: value });
+  }
+
+  handleEntryElementEdit(index, value) {
+    const newEntry = (this.props.entry.dataArr[index].data = value);
+    this.props.handleEntryChange(newEntry);
   }
 
   render() {
     const { entry } = this.props;
-    const { isMinimized } = this.state;
+    const { isMinimized, editable } = this.state;
     let content = null;
 
     if (entry.dataArr.length > 0) {
@@ -32,9 +48,12 @@ class CodexEntry extends React.Component {
           return (
             <EntryText
               key={index}
+              index={index}
               visible={visible}
               value={item.data}
               name={item.name}
+              editable={editable}
+              handleChange={this.handleEntryElementEdit}
             />
           );
         }
@@ -48,10 +67,13 @@ class CodexEntry extends React.Component {
           return (
             <EntryImageUrl
               key={index}
+              index={index}
               visible={visible}
               value={item.data}
               width={width}
               name={item.name}
+              editable={editable}
+              handleChange={this.handleEntryElementEdit}
             />
           );
         }
@@ -62,7 +84,7 @@ class CodexEntry extends React.Component {
       {
         name: "edit",
         callback: () => {
-          console.log("edit");
+          this.handleChange("editable", true);
         },
       },
       {
@@ -75,12 +97,16 @@ class CodexEntry extends React.Component {
 
     return (
       <div>
-        <div className={styles.dropdownContainer}>
-          <DropdownButton options={dropdownOptions} />
-        </div>
+        {!isMinimized ? (
+          <div className={styles.dropdownContainer}>
+            <DropdownButton options={dropdownOptions} />
+          </div>
+        ) : null}
 
-        <div className={styles.entry} onClick={this.handleMinimizeToggle}>
-          <h3 className={styles.entryName}>{entry.name}</h3>
+        <div className={styles.entry}>
+          <h3 className={styles.entryName} onClick={this.handleMinimizeToggle}>
+            {entry.name}
+          </h3>
 
           {content}
         </div>
