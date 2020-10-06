@@ -1,6 +1,7 @@
 import React from "react";
 import EntryImageUrl from "../../../EntryImageUrl";
 import EntryText from "../../../EntryText";
+import DropdownButton from "../../../../../../../../components/DropdownButton";
 import styles from "./styles.css";
 
 class CodexEntry extends React.Component {
@@ -57,10 +58,32 @@ class CodexEntry extends React.Component {
       });
     }
 
+    const dropdownOptions = [
+      {
+        name: "edit",
+        callback: () => {
+          console.log("edit");
+        },
+      },
+      {
+        name: "delete",
+        callback: () => {
+          console.log("pretend deleted");
+        },
+      },
+    ];
+
     return (
-      <div className={styles.entry} onClick={this.handleMinimizeToggle}>
-        <h3 className={styles.entryName}>{entry.name}</h3>
-        {content}
+      <div>
+        <div className={styles.dropdownContainer}>
+          <DropdownButton options={dropdownOptions} />
+        </div>
+
+        <div className={styles.entry} onClick={this.handleMinimizeToggle}>
+          <h3 className={styles.entryName}>{entry.name}</h3>
+
+          {content}
+        </div>
       </div>
     );
   }

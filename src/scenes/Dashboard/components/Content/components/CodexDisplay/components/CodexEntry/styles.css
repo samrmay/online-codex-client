@@ -11,3 +11,8 @@
 .entryName {
   display: inline;
 }
+
+.dropdownContainer {
+  float: right;
+  margin: 10px;
+}

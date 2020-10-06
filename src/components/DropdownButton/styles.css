@@ -1,0 +1,37 @@
+.container {
+  background-color: transparent;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.container:hover {
+  background-color: whitesmoke;
+}
+.container:active {
+  background-color: lightgray;
+}
+.container:focus {
+  outline: none;
+}
+
+.dropdown {
+  background: white;
+  z-index: 1;
+  position: absolute;
+  box-shadow: 2px 2px 8px rgba(100, 100, 100, 0.4),
+    -2px -2px 8px rgba(100, 100, 100, 0.4);
+  border: 1px solid black;
+}
+
+.option {
+  background: white;
+  padding: 5px;
+}
+.option:hover {
+  background: whitesmoke;
+}
+.option:active {
+  background: lightgray;
+}
