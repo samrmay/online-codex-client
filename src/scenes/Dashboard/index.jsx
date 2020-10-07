@@ -99,8 +99,12 @@ class Dashboard extends React.Component {
         }
       });
     } else {
+      let { workingCodexIndex } = this.state;
+      if (workingCodexIndex === currentActive.length - 1) {
+        workingCodexIndex -= 1;
+      }
       currentActive.splice(codexIndex, 1);
-      this.setState({ activeCodices: currentActive, workingCodexIndex: 0 });
+      this.setState({ activeCodices: currentActive, workingCodexIndex });
     }
   }
 
@@ -202,6 +206,7 @@ class Dashboard extends React.Component {
             addEntry={this.addEntryToWorkingCodex}
             editWorkingCodex={this.editWorkingCodex}
             saveWorkingCodex={this.saveWorkingCodex}
+            toggleActiveCodex={this.toggleActiveCodex}
           />
         </div>
       </div>

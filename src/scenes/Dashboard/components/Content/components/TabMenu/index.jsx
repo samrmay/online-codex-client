@@ -13,6 +13,7 @@ class TabMenu extends React.Component {
       changeWorkingCodex,
       workingCodex,
       newCodex,
+      toggleActiveCodex,
     } = this.props;
 
     let tabArr = [];
@@ -23,6 +24,8 @@ class TabMenu extends React.Component {
             key={index}
             index={index}
             name={codex.name}
+            codexId={codex._id}
+            toggleActiveCodex={toggleActiveCodex}
             handleClick={changeWorkingCodex}
             isActive={workingCodex && workingCodex.name === codex.name}
             isNewCodex={codex.newCodex}

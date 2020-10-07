@@ -1,5 +1,5 @@
 import React from "react";
-import SidebarToggle from "./components/SidebarToggle";
+import SidebarButton from "./components/SIdebarButton";
 import styles from "./styles.css";
 
 class Sidebar extends React.Component {
@@ -8,15 +8,22 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const { initNewCodex } = this.props;
+    const { initNewCodex, activeCodices } = this.props;
 
     const sidebarTabs = this.props.codices.map((codex, index) => {
+      let active = false;
+      for (let i = 0; i < activeCodices.length; i++) {
+        if (codex._id === activeCodices[i]._id) {
+          active = true;
+        }
+      }
+
       return (
-        <SidebarToggle
+        <SidebarButton
           key={index}
           codex={codex}
           handleClick={this.props.toggleActiveCodex}
-          active={this.props.activeCodices.includes(codex)}
+          active={active}
         />
       );
     });

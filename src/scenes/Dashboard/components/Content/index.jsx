@@ -16,6 +16,7 @@ class Content extends React.Component {
           activeCodices={this.props.activeCodices}
           changeWorkingCodex={this.props.changeWorkingCodex}
           workingCodex={workingCodex}
+          toggleActiveCodex={this.props.toggleActiveCodex}
         />
 
         <CodexDisplay
