@@ -1,18 +1,24 @@
 .tab {
   cursor: default;
-  background-color: lightblue;
+  background-color: white;
   padding: 5px;
   transition: background-color 0.2s;
+  cursor: pointer;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 .tab:hover {
-  background-color: red;
+  background-color: lightblue;
 }
 
 .tabActive {
   cursor: default;
-  background-color: red;
+  background-color: lightblue;
   padding: 5px;
   transition: background-color 0.2s;
+  cursor: pointer;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 .tabActive:hover {
   background-color: lightgray;

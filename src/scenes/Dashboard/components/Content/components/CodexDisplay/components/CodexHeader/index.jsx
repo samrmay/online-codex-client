@@ -4,10 +4,13 @@ import styles from "./styles.css";
 function CodexHeader(props) {
   return (
     <div className={styles.header}>
-      <span>{props.name}</span>
-      <button value={true} onClick={props.handleChange}>
-        add entry
-      </button>
+      <span>search bar</span>
+      <div>
+        <button value={true} onClick={props.handleChange}>
+          add entry
+        </button>
+        <button style={{ margin: "5px" }}>Change schema</button>
+      </div>
     </div>
   );
 }
