@@ -24,6 +24,7 @@ class Dashboard extends React.Component {
     this.addEntryToWorkingCodex = this.addEntryToWorkingCodex.bind(this);
     this.editWorkingCodex = this.editWorkingCodex.bind(this);
     this.saveWorkingCodex = this.saveWorkingCodex.bind(this);
+    this.deleteWorkingCodex = this.deleteWorkingCodex.bind(this);
   }
 
   componentDidMount() {
@@ -180,6 +181,28 @@ class Dashboard extends React.Component {
     }
   }
 
+  deleteWorkingCodex() {
+    let { activeCodices, workingCodexIndex, userInfo } = this.state;
+    const codex = activeCodices[workingCodexIndex];
+    fetch(process.env.SERVER_URL + `codices/${codex._id}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+    }).then((response) => {
+      if (response.status === 200) {
+        activeCodices.splice(workingCodexIndex, 1);
+        workingCodexIndex = 0;
+        userInfo.codices = userInfo.codices.filter((item) => {
+          return item._id !== codex._id;
+        });
+
+        this.setState({ activeCodices, workingCodexIndex, userInfo });
+      }
+    });
+  }
+
   render() {
     if (!this.props.userId) {
       return <Redirect to="/login" />;
@@ -206,6 +229,7 @@ class Dashboard extends React.Component {
             addEntry={this.addEntryToWorkingCodex}
             editWorkingCodex={this.editWorkingCodex}
             saveWorkingCodex={this.saveWorkingCodex}
+            deleteWorkingCodex={this.deleteWorkingCodex}
             toggleActiveCodex={this.toggleActiveCodex}
           />
         </div>

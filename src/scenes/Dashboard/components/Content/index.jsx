@@ -24,6 +24,7 @@ class Content extends React.Component {
           addEntry={this.props.addEntry}
           editWorkingCodex={this.props.editWorkingCodex}
           saveWorkingCodex={this.props.saveWorkingCodex}
+          deleteWorkingCodex={this.props.deleteWorkingCodex}
         />
       </div>
     );

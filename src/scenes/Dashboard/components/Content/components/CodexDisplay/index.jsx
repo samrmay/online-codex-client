@@ -97,6 +97,7 @@ class CodexDisplay extends React.Component {
         <CodexHeader
           name={workingCodex.name}
           handleChange={this.addDelNewEntry}
+          deleteWorkingCodex={this.props.deleteWorkingCodex}
         />
         <div className={styles.entries}>{content}</div>
       </div>

@@ -9,7 +9,17 @@ function CodexHeader(props) {
         <button value={true} onClick={props.handleChange}>
           add entry
         </button>
-        <button style={{ margin: "5px" }}>Change schema</button>
+        <button
+          style={{ margin: "5px" }}
+          onClick={() => {
+            console.error("Cannot yet change schema");
+          }}
+        >
+          Change schema
+        </button>
+        <button style={{ margin: "5px" }} onClick={props.deleteWorkingCodex}>
+          Delete codex
+        </button>
       </div>
     </div>
   );
