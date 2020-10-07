@@ -52,6 +52,7 @@ class CodexDisplay extends React.Component {
         <NewCodex
           codex={workingCodex}
           editWorkingCodex={this.props.editWorkingCodex}
+          saveWorkingCodex={this.props.saveWorkingCodex}
         />
       );
     }

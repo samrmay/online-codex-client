@@ -22,6 +22,7 @@ class Content extends React.Component {
           workingCodex={workingCodex}
           addEntry={this.props.addEntry}
           editWorkingCodex={this.props.editWorkingCodex}
+          saveWorkingCodex={this.props.saveWorkingCodex}
         />
       </div>
     );

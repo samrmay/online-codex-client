@@ -23,6 +23,7 @@ class Dashboard extends React.Component {
     this.changeWorkingCodex = this.changeWorkingCodex.bind(this);
     this.addEntryToWorkingCodex = this.addEntryToWorkingCodex.bind(this);
     this.editWorkingCodex = this.editWorkingCodex.bind(this);
+    this.saveWorkingCodex = this.saveWorkingCodex.bind(this);
   }
 
   componentDidMount() {
@@ -135,6 +136,46 @@ class Dashboard extends React.Component {
     this.setState({ activeCodices });
   }
 
+  saveWorkingCodex() {
+    const { activeCodices, workingCodexIndex, userInfo } = this.state;
+    const codex = activeCodices[workingCodexIndex];
+
+    if (codex.newCodex) {
+      fetch(process.env.SERVER_URL + "codices", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(codex),
+      }).then((response) => {
+        if (response.status === 201) {
+          response.json().then((data) => {
+            activeCodices.splice(workingCodexIndex, 1, data);
+            userInfo.codices.push({ _id: data._id, name: data.name });
+            this.setState({ activeCodices, userInfo });
+          });
+        }
+      });
+    } else {
+      fetch(process.env.SERVER_URL + `codices/${codex._id}`, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(codex),
+      }).then((response) => {
+        if (response.status === 200) {
+          response.json().then((data) => {
+            activeCodices.splice(workingCodexIndex, 1, data);
+            this.setState({ activeCodices });
+          });
+        }
+      });
+    }
+  }
+
   render() {
     if (!this.props.userId) {
       return <Redirect to="/login" />;
@@ -160,6 +201,7 @@ class Dashboard extends React.Component {
             changeWorkingCodex={this.changeWorkingCodex}
             addEntry={this.addEntryToWorkingCodex}
             editWorkingCodex={this.editWorkingCodex}
+            saveWorkingCodex={this.saveWorkingCodex}
           />
         </div>
       </div>

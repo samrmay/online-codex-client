@@ -9,6 +9,7 @@ class NewCodex extends React.Component {
     super(props);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleStructureChange = this.handleStructureChange.bind(this);
+    this.handleElementChange = this.handleElementChange.bind(this);
   }
 
   handleNameChange(value) {
@@ -18,14 +19,21 @@ class NewCodex extends React.Component {
   }
 
   handleStructureChange(event) {
-    const { name, displaytype } = event.target;
+    const { name, value } = event.target;
     const newCodex = this.props.codex;
     const newElement = {
       dataType: name,
-      displayType: displaytype,
-      name: name,
+      displayType: value,
+      name: `${value} ${name}`,
     };
     newCodex.defaultEntryStructure.push(newElement);
+
+    this.props.editWorkingCodex(newCodex);
+  }
+
+  handleElementChange(index, value) {
+    const newCodex = this.props.codex;
+    newCodex.defaultEntryStructure[index].name = value;
 
     this.props.editWorkingCodex(newCodex);
   }
@@ -42,9 +50,10 @@ class NewCodex extends React.Component {
               key={index}
               index={index}
               visible={true}
-              value={item.data}
+              value={item.name}
               name={item.name}
               editable={true}
+              handleChange={this.handleElementChange}
             />
           );
         }
@@ -59,10 +68,11 @@ class NewCodex extends React.Component {
               key={index}
               index={index}
               visible={true}
-              value={item.data}
+              value={item.name}
               width={"200px"}
               name={item.name}
               editable={true}
+              handleChange={this.handleElementChange}
             />
           );
         }
@@ -82,15 +92,23 @@ class NewCodex extends React.Component {
             <button
               onClick={this.handleStructureChange}
               name="ImageUrl"
-              displaytype="Header"
+              value="Header"
             >
               Add image header
             </button>
 
             <button
               onClick={this.handleStructureChange}
+              name="ImageUrl"
+              value="Body"
+            >
+              Add body image
+            </button>
+
+            <button
+              onClick={this.handleStructureChange}
               name="String"
-              displaytype="Header"
+              value="Header"
             >
               Add text header
             </button>
@@ -98,16 +116,20 @@ class NewCodex extends React.Component {
             <button
               onClick={this.handleStructureChange}
               name="String"
-              displaytype="Body"
+              value="Body"
             >
               Add body text
+            </button>
+
+            <button onClick={this.props.saveWorkingCodex}>
+              Save new codex
             </button>
           </div>
         </div>
 
         <div className={styles.entry}>
           <div className={styles.entryHeader}>
-            <div className={styles.entryName}>Entry Name</div>
+            <div className={styles.entryName}>Default Entry </div>
           </div>
 
           <hr />
