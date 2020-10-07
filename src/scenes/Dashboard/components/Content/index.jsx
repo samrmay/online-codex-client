@@ -21,7 +21,6 @@ class Content extends React.Component {
         <CodexDisplay
           workingCodex={workingCodex}
           addEntry={this.props.addEntry}
-          handleCodexEdit={this.props.handleCodexEdit}
           editWorkingCodex={this.props.editWorkingCodex}
         />
       </div>

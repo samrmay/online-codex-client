@@ -20,7 +20,6 @@ class Dashboard extends React.Component {
     this.getUserInfo = this.getUserInfo.bind(this);
     this.toggleActiveCodex = this.toggleActiveCodex.bind(this);
     this.initNewCodex = this.initNewCodex.bind(this);
-    this.handleCodexEdit = this.handleCodexEdit.bind(this);
     this.changeWorkingCodex = this.changeWorkingCodex.bind(this);
     this.addEntryToWorkingCodex = this.addEntryToWorkingCodex.bind(this);
     this.editWorkingCodex = this.editWorkingCodex.bind(this);
@@ -64,15 +63,6 @@ class Dashboard extends React.Component {
 
       this.setState({
         activeCodices: currentActive,
-      });
-    }
-  }
-
-  handleCodexEdit(codex) {
-    if (codex.newCodex) {
-      this.setState((prevState) => {
-        prevState.activeCodices[0] = codex;
-        return { activeCodices: prevState.activeCodices };
       });
     }
   }
@@ -167,7 +157,6 @@ class Dashboard extends React.Component {
           <Content
             activeCodices={activeCodices}
             workingCodex={activeCodices[workingCodexIndex]}
-            handleCodexEdit={this.handleCodexEdit}
             changeWorkingCodex={this.changeWorkingCodex}
             addEntry={this.addEntryToWorkingCodex}
             editWorkingCodex={this.editWorkingCodex}

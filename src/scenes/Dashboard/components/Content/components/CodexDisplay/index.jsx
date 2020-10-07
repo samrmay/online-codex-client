@@ -40,7 +40,7 @@ class CodexDisplay extends React.Component {
   }
 
   render() {
-    const { workingCodex, addEntry, handleCodexEdit } = this.props;
+    const { workingCodex, addEntry } = this.props;
     const { newEntriesArr } = this.state;
 
     if (!workingCodex) {
@@ -49,7 +49,10 @@ class CodexDisplay extends React.Component {
 
     if (workingCodex.newCodex) {
       return (
-        <NewCodex codex={workingCodex} handleCodexEdit={handleCodexEdit} />
+        <NewCodex
+          codex={workingCodex}
+          editWorkingCodex={this.props.editWorkingCodex}
+        />
       );
     }
 

@@ -6,15 +6,7 @@ import styles from "./styles.css";
 class EntryText extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      beingEdited: false,
-    };
-    this.handleEditClick = this.handleEditClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleEditClick() {
-    this.setState({ beingEdited: true });
   }
 
   handleChange(value) {
@@ -40,18 +32,12 @@ class EntryText extends React.Component {
     return (
       <div style={style}>
         <div className={styles.textContainer}>
-          {editable ? (
-            <img
-              src={editIcon}
-              className={styles.editIcon}
-              onClick={this.handleEditClick}
-            />
-          ) : null}
+          {editable ? <img src={editIcon} className={styles.editIcon} /> : null}
 
           <InteractableText
             Tag={Tag}
             value={value}
-            editable={this.state.beingEdited}
+            editable={editable}
             handleChange={this.handleChange}
           />
         </div>

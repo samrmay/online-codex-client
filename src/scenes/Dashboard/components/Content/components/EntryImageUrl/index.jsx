@@ -6,15 +6,7 @@ import styles from "./styles.css";
 class EntryImageUrl extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      beingEdited: false,
-    };
-    this.handleEditClick = this.handleEditClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleEditClick() {
-    this.setState({ beingEdited: true });
   }
 
   handleChange(value) {
@@ -33,14 +25,10 @@ class EntryImageUrl extends React.Component {
       <div style={style}>
         {editable ? (
           <div className={styles.editContainer}>
-            <img
-              src={editIcon}
-              className={styles.editIcon}
-              onClick={this.handleEditClick}
-            />
+            <img src={editIcon} className={styles.editIcon} />
             <InteractableText
               value={value}
-              editable={this.state.beingEdited}
+              editable={editable}
               handleChange={this.handleChange}
             />
           </div>
