@@ -90,7 +90,7 @@ class CodexEntry extends React.Component {
       {
         name: "delete",
         callback: () => {
-          console.log("pretend deleted");
+          this.props.deleteEntry(this.props.index);
         },
       },
     ];

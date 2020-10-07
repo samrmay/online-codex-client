@@ -14,12 +14,20 @@ class CodexDisplay extends React.Component {
     };
     this.handleEntryChange = this.handleEntryChange.bind(this);
     this.addDelNewEntry = this.addDelNewEntry.bind(this);
+    this.deleteEntry = this.deleteEntry.bind(this);
   }
 
   handleEntryChange(index, entry) {
     const { workingCodex } = this.props;
-    workingCodex[index] = entry;
+    workingCodex.entries[index] = entry;
     this.props.editWorkingCodex(workingCodex);
+  }
+
+  deleteEntry(index) {
+    const { workingCodex } = this.props;
+    workingCodex.entries.splice(index, 1);
+    this.props.editWorkingCodex(workingCodex);
+    this.props.saveWorkingCodex();
   }
 
   addDelNewEntry(event) {
@@ -66,6 +74,7 @@ class CodexDisplay extends React.Component {
             key={`entry${index}`}
             index={index}
             handleEntryChange={this.handleEntryChange}
+            deleteEntry={this.deleteEntry}
           />
         );
       });
