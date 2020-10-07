@@ -8,54 +8,91 @@ import styles from "./styles.css";
 class CodexDisplay extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      newEntriesArr: [],
+      newEntryNum: 0,
+    };
+    this.handleEntryChange = this.handleEntryChange.bind(this);
+    this.addDelNewEntry = this.addDelNewEntry.bind(this);
+  }
+
+  handleEntryChange(index, entry) {
+    const { workingCodex } = this.props;
+    workingCodex[index] = entry;
+    this.props.editWorkingCodex(workingCodex);
+  }
+
+  addDelNewEntry(event) {
+    const { name, value } = event.target;
+    let { newEntriesArr, newEntryNum } = this.state;
+    console.log(name, value);
+
+    if (value === "true") {
+      newEntriesArr.push(newEntryNum);
+      newEntryNum += 1;
+    } else if (value === "false") {
+      const i = newEntriesArr.indexOf(Number(name));
+      console.log(i);
+      newEntriesArr.splice(i, 1);
+    }
+
+    this.setState({ newEntriesArr, newEntryNum });
   }
 
   render() {
-    const { activeCodex, newEntry, addEntry, handleCodexEdit } = this.props;
-    if (!activeCodex) {
+    const { workingCodex, addEntry, handleCodexEdit } = this.props;
+    const { newEntriesArr } = this.state;
+
+    if (!workingCodex) {
       return <div>Select a codex</div>;
     }
 
-    if (activeCodex.newCodex) {
-      return <NewCodex codex={activeCodex} handleCodexEdit={handleCodexEdit} />;
+    if (workingCodex.newCodex) {
+      return (
+        <NewCodex codex={workingCodex} handleCodexEdit={handleCodexEdit} />
+      );
     }
 
     let content = "Add an entry to get started";
-    if (activeCodex.entries.length > 0) {
-      content = activeCodex.entries.map((entry, index) => {
+    if (workingCodex.entries.length > 0) {
+      content = workingCodex.entries.map((entry, index) => {
         return (
           <CodexEntry
             entry={entry}
-            key={index}
+            key={`entry${index}`}
             index={index}
-            handleEntryChange={this.props.handleEntryChange}
+            handleEntryChange={this.handleEntryChange}
           />
         );
       });
     }
-    if (newEntry && Array.isArray(content)) {
-      content.unshift(
-        <NewEntry
-          defaultStructure={activeCodex.defaultEntryStructure}
-          addEntry={addEntry}
-          key={-1}
-        />
-      );
-    } else if (newEntry) {
-      content = (
-        <NewEntry
-          defaultStructure={activeCodex.defaultEntryStructure}
-          addEntry={addEntry}
-          key={-1}
-        />
-      );
+
+    let newEntries = [];
+    if (newEntriesArr.length > 0) {
+      newEntries = newEntriesArr.map((item) => {
+        return (
+          <NewEntry
+            defaultStructure={workingCodex.defaultEntryStructure}
+            addEntry={addEntry}
+            handleChange={this.addDelNewEntry}
+            key={`newEntry#${item}`}
+            index={item}
+          />
+        );
+      });
+    }
+
+    if (Array.isArray(content)) {
+      content = newEntries.concat(content);
+    } else {
+      content = newEntries;
     }
 
     return (
       <div className={styles.codexDisplay}>
         <CodexHeader
-          name={activeCodex.name}
-          handleChange={this.props.handleChange}
+          name={workingCodex.name}
+          handleChange={this.addDelNewEntry}
         />
         <div className={styles.entries}>{content}</div>
       </div>

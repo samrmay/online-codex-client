@@ -5,7 +5,7 @@ function CodexHeader(props) {
   return (
     <div className={styles.header}>
       <span>{props.name}</span>
-      <button name="newEntry" value={true} onClick={props.handleChange}>
+      <button value={true} onClick={props.handleChange}>
         add entry
       </button>
     </div>

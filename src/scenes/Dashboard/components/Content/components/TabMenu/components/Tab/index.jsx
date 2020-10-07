@@ -8,16 +8,16 @@ class Tab extends React.Component {
   }
 
   handleClick() {
-    const { handleClick, codex, isActive } = this.props;
-    handleClick(isActive ? null : codex);
+    const { handleClick, isActive, index } = this.props;
+    handleClick(isActive ? null : index);
   }
 
   render() {
-    const { name, isActive, codex } = this.props;
+    const { name, isActive, isNewCodex } = this.props;
     const style = isActive ? styles.tabActive : styles.tab;
     return (
       <div className={style} onClick={this.handleClick}>
-        {codex.newCodex ? "New codex: " : null}
+        {isNewCodex ? "New codex: " : null}
         {name}
       </div>
     );

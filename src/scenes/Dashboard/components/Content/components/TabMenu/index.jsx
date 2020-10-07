@@ -10,8 +10,8 @@ class TabMenu extends React.Component {
   render() {
     const {
       activeCodices,
-      handleActiveCodexChange,
-      activeCodex,
+      changeWorkingCodex,
+      workingCodex,
       newCodex,
     } = this.props;
 
@@ -20,11 +20,12 @@ class TabMenu extends React.Component {
       tabArr = activeCodices.map((codex, index) => {
         return (
           <Tab
-            name={codex.name}
-            codex={codex}
-            handleClick={handleActiveCodexChange}
-            isActive={activeCodex && activeCodex.name === codex.name}
             key={index}
+            index={index}
+            name={codex.name}
+            handleClick={changeWorkingCodex}
+            isActive={workingCodex && workingCodex.name === codex.name}
+            isNewCodex={codex.newCodex}
           />
         );
       });

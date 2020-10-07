@@ -15,11 +15,15 @@ class Dashboard extends React.Component {
         codices: [],
       },
       activeCodices: [],
+      workingCodexIndex: -1,
     };
     this.getUserInfo = this.getUserInfo.bind(this);
     this.toggleActiveCodex = this.toggleActiveCodex.bind(this);
     this.initNewCodex = this.initNewCodex.bind(this);
     this.handleCodexEdit = this.handleCodexEdit.bind(this);
+    this.changeWorkingCodex = this.changeWorkingCodex.bind(this);
+    this.addEntryToWorkingCodex = this.addEntryToWorkingCodex.bind(this);
+    this.editWorkingCodex = this.editWorkingCodex.bind(this);
   }
 
   componentDidMount() {
@@ -76,7 +80,7 @@ class Dashboard extends React.Component {
   toggleActiveCodex(codexId) {
     const currentActive = this.state.activeCodices;
     let includesCodex = false;
-    let codexIndex = -1;
+    let codexIndex = currentActive.length;
     for (let i = 0; i < currentActive.length; i++) {
       if (currentActive[i]._id === codexId) {
         includesCodex = true;
@@ -96,14 +100,49 @@ class Dashboard extends React.Component {
         if (response.status === 200) {
           response.json().then((data) => {
             currentActive.push(data);
-            this.setState({ activeCodices: currentActive });
+            this.setState({
+              activeCodices: currentActive,
+              workingCodexIndex: codexIndex,
+            });
           });
         }
       });
     } else {
       currentActive.splice(codexIndex, 1);
-      this.setState({ activeCodices: currentActive });
+      this.setState({ activeCodices: currentActive, workingCodexIndex: 0 });
     }
+  }
+
+  changeWorkingCodex(index) {
+    this.setState({ workingCodexIndex: index });
+  }
+
+  addEntryToWorkingCodex(entry) {
+    const { activeCodices, workingCodexIndex } = this.state;
+    const workingCodex = activeCodices[workingCodexIndex];
+    fetch(process.env.SERVER_URL + `codices/addEntries/${workingCodex._id}`, {
+      method: "PUT",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ entryArr: [entry] }),
+    }).then((response) => {
+      if (response.status === 200) {
+        response.json().then((data) => {
+          const newActiveCodices = activeCodices;
+          newActiveCodices[workingCodexIndex] = data;
+
+          this.setState({ activeCodices: newActiveCodices });
+        });
+      }
+    });
+  }
+
+  editWorkingCodex(codex) {
+    const { activeCodices, workingCodexIndex } = this.state;
+    activeCodices[workingCodexIndex] = codex;
+    this.setState({ activeCodices });
   }
 
   render() {
@@ -112,7 +151,7 @@ class Dashboard extends React.Component {
     }
 
     const { name, codices } = this.state.userInfo;
-    const { activeCodices } = this.state;
+    const { activeCodices, workingCodexIndex } = this.state;
 
     return (
       <div className={styles.dashboard}>
@@ -127,7 +166,11 @@ class Dashboard extends React.Component {
           />
           <Content
             activeCodices={activeCodices}
+            workingCodex={activeCodices[workingCodexIndex]}
             handleCodexEdit={this.handleCodexEdit}
+            changeWorkingCodex={this.changeWorkingCodex}
+            addEntry={this.addEntryToWorkingCodex}
+            editWorkingCodex={this.editWorkingCodex}
           />
         </div>
       </div>

@@ -40,13 +40,13 @@ class NewEntry extends React.Component {
     const name = this.state.entryName;
 
     const newEntry = { name, dataArr };
-    console.log(newEntry);
     this.props.addEntry(newEntry);
   }
 
   render() {
     const { dataArr } = this.state;
     const { defaultStructure } = this.props;
+    const keyIndex = this.props.index;
 
     const content = defaultStructure.map((item, index) => {
       if (item.dataType === "String") {
@@ -58,6 +58,7 @@ class NewEntry extends React.Component {
               index={index}
               handleChange={this.handleChange}
               fontSize={fontSize}
+              key={`${keyIndex}-${index}`}
             />
           </div>
         );
@@ -76,6 +77,7 @@ class NewEntry extends React.Component {
               index={index}
               handleChange={this.handleChange}
               fontSize="12px"
+              key={`${keyIndex}-${index}`}
             />
             <img style={{ width: imgSize }} src={dataArr[index].data} />
           </div>
@@ -91,9 +93,13 @@ class NewEntry extends React.Component {
           fontSize="24px"
           fontWeight={500}
           fontFamily="Sans-Serif"
+          key={`${keyIndex}-name`}
         />
         {content}
         <button onClick={this.handleSubmit}>Submit</button>
+        <button onClick={this.props.handleChange} name={keyIndex} value={false}>
+          Cancel
+        </button>
       </div>
     );
   }
