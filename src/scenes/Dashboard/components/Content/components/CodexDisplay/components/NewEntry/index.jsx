@@ -40,7 +40,7 @@ class NewEntry extends React.Component {
     const name = this.state.entryName;
 
     const newEntry = { name, dataArr };
-    this.props.addEntry(newEntry);
+    this.props.addEntry(newEntry, this.props.index);
   }
 
   render() {

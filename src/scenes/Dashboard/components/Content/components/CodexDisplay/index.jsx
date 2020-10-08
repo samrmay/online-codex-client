@@ -15,6 +15,7 @@ class CodexDisplay extends React.Component {
     this.handleEntryChange = this.handleEntryChange.bind(this);
     this.addDelNewEntry = this.addDelNewEntry.bind(this);
     this.deleteEntry = this.deleteEntry.bind(this);
+    this.addEntry = this.addEntry.bind(this);
   }
 
   handleEntryChange(index, entry) {
@@ -47,8 +48,17 @@ class CodexDisplay extends React.Component {
     this.setState({ newEntriesArr, newEntryNum });
   }
 
+  addEntry(entry, index) {
+    this.setState((prevState) => {
+      const { newEntriesArr } = prevState;
+      newEntriesArr.splice(index, 1);
+      return { newEntriesArr };
+    });
+    this.props.addEntry(entry);
+  }
+
   render() {
-    const { workingCodex, addEntry } = this.props;
+    const { workingCodex } = this.props;
     const { newEntriesArr } = this.state;
 
     if (!workingCodex) {
@@ -87,7 +97,7 @@ class CodexDisplay extends React.Component {
         return (
           <NewEntry
             defaultStructure={workingCodex.defaultEntryStructure}
-            addEntry={addEntry}
+            addEntry={this.addEntry}
             handleChange={this.addDelNewEntry}
             key={`newEntry#${item}`}
             index={item}
