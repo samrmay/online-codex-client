@@ -75,6 +75,7 @@ class CodexDisplay extends React.Component {
             index={index}
             handleEntryChange={this.handleEntryChange}
             deleteEntry={this.deleteEntry}
+            saveWorkingCodex={this.props.saveWorkingCodex}
           />
         );
       });

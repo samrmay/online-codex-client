@@ -14,6 +14,7 @@ class CodexEntry extends React.Component {
     this.handleMinimizeToggle = this.handleMinimizeToggle.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleEntryElementEdit = this.handleEntryElementEdit.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
   handleMinimizeToggle() {
@@ -33,6 +34,11 @@ class CodexEntry extends React.Component {
   handleEntryElementEdit(index, value) {
     const newEntry = (this.props.entry.dataArr[index].data = value);
     this.props.handleEntryChange(newEntry);
+  }
+
+  handleSave() {
+    this.props.saveWorkingCodex();
+    this.setState({ editable: false });
   }
 
   render() {
@@ -109,6 +115,11 @@ class CodexEntry extends React.Component {
           </h3>
 
           {content}
+          {editable ? (
+            <div>
+              <button onClick={this.handleSave}>Save</button>
+            </div>
+          ) : null}
         </div>
       </div>
     );
