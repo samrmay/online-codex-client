@@ -1,4 +1,5 @@
 import React from "react";
+import { linkRegex } from "../../helpers/regex";
 import styles from "./styles.css";
 
 class InteractableText extends React.Component {
@@ -38,7 +39,14 @@ class InteractableText extends React.Component {
   }
 
   render() {
-    const { Tag, fontSize, fontWeight, fontFamily, value } = this.props;
+    const {
+      Tag,
+      fontSize,
+      fontWeight,
+      fontFamily,
+      autoDetectLinks,
+      editable,
+    } = this.props;
     const { isFocused } = this.state;
     const style = {
       fontSize,
@@ -46,6 +54,15 @@ class InteractableText extends React.Component {
       fontFamily,
       margin: "0px",
     };
+
+    let { value } = this.props;
+    if (autoDetectLinks && value.match(linkRegex) && !editable) {
+      value = (
+        <a href={value} target="_blank">
+          {value}
+        </a>
+      );
+    }
 
     return (
       <div
@@ -82,6 +99,7 @@ InteractableText.defaultProps = {
   fontWeight: "500",
   fontFamily: "Sans-Serif",
   editable: true,
+  autoDetectLinks: true,
 };
 
 export default InteractableText;
