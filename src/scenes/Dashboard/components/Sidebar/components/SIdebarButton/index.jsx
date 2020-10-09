@@ -15,7 +15,7 @@ class SidebarButton extends React.Component {
 
   render() {
     const { codex, active } = this.props;
-    const style = active ? { borderLeft: "1px solid red" } : null;
+    const style = active ? { borderLeft: "2px solid red" } : null;
 
     return (
       <div

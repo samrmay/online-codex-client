@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Content from "./components/Content";
+import { stringPropertySort } from "../../helpers/sort";
 import styles from "./styles.css";
 
 class Dashboard extends React.Component {
@@ -44,6 +45,7 @@ class Dashboard extends React.Component {
       if (response.status === 200) {
         response.json().then((data) => {
           const { name, email, codices } = data;
+          codices.sort(stringPropertySort("name"));
           this.setState({ userInfo: { name, email, codices } });
         });
       }

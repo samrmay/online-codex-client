@@ -3,6 +3,7 @@ import CodexHeader from "./components/CodexHeader";
 import CodexEntry from "./components/CodexEntry";
 import NewEntry from "./components/NewEntry";
 import NewCodex from "./components/NewCodex";
+import { stringPropertySort } from "../../../../../../helpers/sort";
 import styles from "./styles.css";
 
 class CodexDisplay extends React.Component {
@@ -76,7 +77,9 @@ class CodexDisplay extends React.Component {
     }
 
     let content = "Add an entry to get started";
-    if (workingCodex.entries.length > 0) {
+    const workingCodexEntries = workingCodex.entries;
+    if (workingCodexEntries.length > 0) {
+      workingCodexEntries.sort(stringPropertySort("name"));
       content = workingCodex.entries.map((entry, index) => {
         return (
           <CodexEntry
