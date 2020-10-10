@@ -1,0 +1,23 @@
+.dropdown {
+  background-color: white;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.2s;
+}
+.dropdown:hover {
+  background-color: whitesmoke;
+}
+.dropdown:focus {
+  outline: none;
+}
+.headerValue {
+  padding: 5px;
+}
+.optionsContainer {
+  background: lightgray;
+  z-index: 1;
+  position: absolute;
+  box-shadow: 2px 2px 8px rgba(100, 100, 100, 0.4),
+    -2px -2px 8px rgba(100, 100, 100, 0.4);
+  border: 1px solid black;
+}

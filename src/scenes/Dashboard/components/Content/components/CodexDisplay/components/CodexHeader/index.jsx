@@ -1,10 +1,24 @@
 import React from "react";
+import DropdownSelect from '../../../../../../../../components/DropdownSelect'
 import styles from "./styles.css";
 
 function CodexHeader(props) {
+  const defaultStructure = props.defaultEntryStructure
+  let dropdownOptions = [{label: 'name', value: 'name'}]
+  let sortByOptions = null
+  if (Array.isArray(defaultStructure) && defaultStructure.length > 0) {
+    sortByOptions = props.defaultEntryStructure.map(item => {
+      return {label: item.name, value: item.name}
+    })
+  }
+  dropdownOptions = dropdownOptions.concat(sortByOptions)
+
   return (
     <div className={styles.header}>
-      <span>search bar</span>
+      <div>
+        <span>search bar</span>
+        <DropdownSelect displayValue='sort by' dropdownOptions={dropdownOptions} handleChoose={props.handleSortChange}/>
+      </div>
       <div>
         <button value={true} onClick={props.handleChange}>
           add entry

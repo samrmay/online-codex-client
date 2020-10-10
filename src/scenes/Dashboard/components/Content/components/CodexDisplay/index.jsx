@@ -3,7 +3,6 @@ import CodexHeader from "./components/CodexHeader";
 import CodexEntry from "./components/CodexEntry";
 import NewEntry from "./components/NewEntry";
 import NewCodex from "./components/NewCodex";
-import DropdownButton from '../../../../../../components/DropdownButton'
 import { stringPropertySort } from "../../../../../../helpers/sort";
 import styles from "./styles.css";
 
@@ -19,6 +18,7 @@ class CodexDisplay extends React.Component {
     this.addDelNewEntry = this.addDelNewEntry.bind(this);
     this.deleteEntry = this.deleteEntry.bind(this);
     this.addEntry = this.addEntry.bind(this);
+    this.handleSortChange = this.handleSortChange.bind(this)
   }
 
   handleEntryChange(index, entry) {
@@ -58,10 +58,13 @@ class CodexDisplay extends React.Component {
     this.props.addEntry(entry);
   }
 
+  handleSortChange(value) {
+    this.setState({sortBy: value})
+  }
+
   render() {
     const { workingCodex } = this.props;
     const { newEntriesArr, sortBy } = this.state;
-
     if (!workingCodex) {
       return <div>Select a codex</div>;
     }
@@ -79,8 +82,23 @@ class CodexDisplay extends React.Component {
     let content = "Add an entry to get started";
     const workingCodexEntries = workingCodex.entries;
     if (workingCodexEntries.length > 0) {
-      console.log(sortBy)
-      workingCodexEntries.sort(stringPropertySort(sortBy));
+
+      // Sort entries by sortBy state
+      if (sortBy === 'name') {
+        workingCodexEntries.sort(stringPropertySort(sortBy));
+      } else {
+        for (let i=0;i<workingCodexEntries[0].dataArr.length;i++) {
+          if (workingCodexEntries[0].dataArr[i].name === sortBy) {
+            workingCodexEntries.sort((a, b) => {
+              const aProp = a.dataArr[i].data
+              const bProp = b.dataArr[i].data
+              return aProp < bProp ? -1 : aProp < bProp ? 1 : 0;
+            })
+            break;
+          }
+        }
+      }
+
       content = workingCodex.entries.map((entry, index) => {
         return (
           <CodexEntry
@@ -121,7 +139,9 @@ class CodexDisplay extends React.Component {
         <CodexHeader
           name={workingCodex.name}
           handleChange={this.addDelNewEntry}
+          handleSortChange={this.handleSortChange}
           deleteWorkingCodex={this.props.deleteWorkingCodex}
+          defaultEntryStructure={workingCodex.defaultEntryStructure}
         />
         <div className={styles.entries}>{content}</div>
       </div>

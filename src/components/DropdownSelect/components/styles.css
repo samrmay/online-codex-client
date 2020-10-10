@@ -1,0 +1,10 @@
+.dropdownOption {
+  background: white;
+  padding: 5px;
+}
+.dropdownOption:hover {
+  background: whitesmoke;
+}
+.dropdownOption:active {
+  background: lightgray;
+}
