@@ -32,8 +32,9 @@ class CodexEntry extends React.Component {
   }
 
   handleEntryElementEdit(index, value) {
-    const newEntry = (this.props.entry.dataArr[index].data = value);
-    this.props.handleEntryChange(newEntry);
+    const newEntry = this.props.entry;
+    newEntry.dataArr[index].data = value
+    this.props.handleEntryChange(this.props.index, newEntry);
   }
 
   handleSave() {

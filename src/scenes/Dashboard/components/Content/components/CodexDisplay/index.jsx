@@ -25,6 +25,7 @@ class CodexDisplay extends React.Component {
     const { workingCodex } = this.props;
     workingCodex.entries[index] = entry;
     this.props.editWorkingCodex(workingCodex);
+    console.log(index, entry)
   }
 
   deleteEntry(index) {
@@ -82,7 +83,6 @@ class CodexDisplay extends React.Component {
     let content = "Add an entry to get started";
     const workingCodexEntries = workingCodex.entries;
     if (workingCodexEntries.length > 0) {
-
       // Sort entries by sortBy state
       if (sortBy === 'name') {
         workingCodexEntries.sort(stringPropertySort(sortBy));
