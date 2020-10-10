@@ -3,6 +3,7 @@ import CodexHeader from "./components/CodexHeader";
 import CodexEntry from "./components/CodexEntry";
 import NewEntry from "./components/NewEntry";
 import NewCodex from "./components/NewCodex";
+import DropdownButton from '../../../../../../components/DropdownButton'
 import { stringPropertySort } from "../../../../../../helpers/sort";
 import styles from "./styles.css";
 
@@ -12,6 +13,7 @@ class CodexDisplay extends React.Component {
     this.state = {
       newEntriesArr: [],
       newEntryNum: 0,
+      sortBy: 'name'
     };
     this.handleEntryChange = this.handleEntryChange.bind(this);
     this.addDelNewEntry = this.addDelNewEntry.bind(this);
@@ -35,14 +37,12 @@ class CodexDisplay extends React.Component {
   addDelNewEntry(event) {
     const { name, value } = event.target;
     let { newEntriesArr, newEntryNum } = this.state;
-    console.log(name, value);
 
     if (value === "true") {
       newEntriesArr.push(newEntryNum);
       newEntryNum += 1;
     } else if (value === "false") {
       const i = newEntriesArr.indexOf(Number(name));
-      console.log(i);
       newEntriesArr.splice(i, 1);
     }
 
@@ -60,7 +60,7 @@ class CodexDisplay extends React.Component {
 
   render() {
     const { workingCodex } = this.props;
-    const { newEntriesArr } = this.state;
+    const { newEntriesArr, sortBy } = this.state;
 
     if (!workingCodex) {
       return <div>Select a codex</div>;
@@ -79,7 +79,8 @@ class CodexDisplay extends React.Component {
     let content = "Add an entry to get started";
     const workingCodexEntries = workingCodex.entries;
     if (workingCodexEntries.length > 0) {
-      workingCodexEntries.sort(stringPropertySort("name"));
+      console.log(sortBy)
+      workingCodexEntries.sort(stringPropertySort(sortBy));
       content = workingCodex.entries.map((entry, index) => {
         return (
           <CodexEntry
