@@ -13,6 +13,7 @@ class App extends React.Component {
     };
     this.getSession = this.getSession.bind(this);
     this.postSession = this.postSession.bind(this);
+    this.deleteSession = this.deleteSession.bind(this)
   }
 
   componentDidMount() {
@@ -47,12 +48,24 @@ class App extends React.Component {
       body: JSON.stringify({ email, password }),
     }).then((response) => {
       if (response.status === 201) {
-        console.log(response.headers);
         response.json().then((data) => {
           this.setState({ loggedUserId: data.id });
         });
       }
     });
+  }
+
+  deleteSession() {
+    fetch(process.env.SERVER_URL + 'sessions', {
+      method: 'DELETE',
+      credentials: 'include'
+    }).then(response => {
+      if (response.status === 200) {
+        this.setState({loggedUserId: null})
+      } else {
+        console.error('could not log out', response)
+      }
+    })
   }
 
   render() {
@@ -67,7 +80,7 @@ class App extends React.Component {
           </Route>
 
           <Route path="/dashboard">
-            <Dashboard userId={this.state.loggedUserId} />
+            <Dashboard userId={this.state.loggedUserId} deleteSession={this.deleteSession}/>
           </Route>
 
           <Route path="/">

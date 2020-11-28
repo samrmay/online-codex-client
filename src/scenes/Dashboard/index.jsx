@@ -215,7 +215,7 @@ class Dashboard extends React.Component {
 
     return (
       <div className={styles.dashboard}>
-        <Header name={name} />
+        <Header name={name} deleteSession={this.props.deleteSession}/>
 
         <div className={styles.sidebarContentContainer}>
           <Sidebar
