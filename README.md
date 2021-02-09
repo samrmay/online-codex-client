@@ -1,8 +1,5 @@
-## React template using ES6
+#online-codex-client
 
-- clone git repo
-- `npm i` to install dependencies
-- `npm run development` to open in development environment
-- `npm run build` to create production build
+Preliminary project to store repositories of information. This is the server.
 
 ### Author: Sam May
